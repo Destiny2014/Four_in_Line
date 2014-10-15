@@ -1,54 +1,33 @@
-package view;
+import javax.swing.*;
 
 /**
  * Created by Nastya on 07.10.2014.
  */
-import model.Board;
-import model.Cell;
+public class Boardview extends JFrame{
+    public int my_size=50;//размер клетки
+    public int my_rows=10;//количество строк
+    public int my_cols=10;//количество столбцов
+    public static int step=0;//
+    public JFrame frame;
+    public Control ctrl;
 
-import java.awt.*;
+    Board my_board = new Board(my_rows,my_cols);//создаем объект поле
+    JPanel contentPane = new Panel(my_board,my_size);
 
-public class BoardView extends Canvas {
 
-    public static  int rows = 6;
-    public static  int cols = 7;
-    public static int x=20;
-    public static  int y=20;
-    private Board field;
-
-    public BoardView(){
-        setSize(600,400);
+    public Boardview()
+    {
+        frame = new JFrame();
+        frame.setTitle("4 в РЯД V1.1");
+        frame.setSize(my_size * my_cols + 17, my_size * my_rows + 39);//задаем окно нужного размера
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(contentPane);
+        ctrl=new Control(frame,my_board,my_size,step);
     }
 
-    public void BoardPanel(){
-        BoardView wh = new BoardView();
-        Frame fr = new Frame();
-        fr.add(wh);
-        fr.add(wh);
-        fr.pack();// фиксирует размер окна
-        fr.setTitle("4 в ряд");
-        fr.setVisible(true);
-    }
-
-
-    public void Draw(Graphics g){
-
-        field = new Board();
-        Color oldColor=new Color(255, 125, 32);
-
-
-        g.setColor(oldColor);
-        Cell[][]cells= field.getCells();
-        for (int r = 0; r < cells.length; r++){
-            for (int c = 0; c < cells[r].length; c++){
-                if (cells[r][c] != null){
-                    g.drawRect(x,y,20,20);
-                    g.fillRect(x,y,20,20);
-                    x=x+20;
-                    y=y+20;
-                }
-
-            }
-        }
+    public void Go()
+    {
+        ctrl.GoGame();
     }
 }
